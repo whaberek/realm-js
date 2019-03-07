@@ -69,6 +69,16 @@ stage('package and test') {
   parallel(
     macos_electron_debug: doMacBuild('electron Debug'),
     macos_electron_release: doMacBuild('electron Release'),
+    macos_electron_debug_2: doMacBuild('electron Debug'),
+    macos_electron_release_2: doMacBuild('electron Release'),
+    macos_electron_debug_3: doMacBuild('electron Debug'),
+    macos_electron_release_3: doMacBuild('electron Release'),
+    macos_electron_debug_4: doMacBuild('electron Debug'),
+    macos_electron_release_4: doMacBuild('electron Release'),
+    macos_electron_debug_5: doMacBuild('electron Debug'),
+    macos_electron_release_5: doMacBuild('electron Release'),
+    macos_electron_debug_6: doMacBuild('electron Debug'),
+    macos_electron_release_6: doMacBuild('electron Release'),
   )
 }
 
