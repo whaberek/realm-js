@@ -177,6 +177,7 @@ module.exports = {
   testLoginTowardsMisbehavingServer() {
     // Try authenticating towards a server thats clearly not ROS
     return Realm.Sync.User.login('https://github.com/realm/realm-js', Realm.Sync.Credentials.anonymous())
+      .then(() => throw new Error('Login should have failed'))
       .catch((e) => {
         assertIsError(e);
         TestCase.assertEqual(
