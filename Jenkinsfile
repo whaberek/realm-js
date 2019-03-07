@@ -67,43 +67,8 @@ stage('check') {
 
 stage('package and test') {
   parallel(
-    eslint: doDockerBuild('eslint-ci', 10, {
-      step([$class: 'CheckStylePublisher', canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'eslint.xml', unHealthy: ''])
-    }),
-    jsdoc: doDockerBuild('jsdoc', 10, {
-      publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'docs/output', reportFiles: 'index.html', reportName: 'Docs'])
-    }),
-    linux_node_8_debug: doDockerBuild('node Debug v8.15.0', 8),
-    linux_node_8_release: doDockerBuild('node Release v8.15.0', 8),
-    linux_node_10_debug: doDockerBuild('node Debug v10.15.1', 10),
-    linux_node_10_release: doDockerBuild('node Release v10.15.1', 10),
-    linux_test_runners: doDockerBuild('test-runners'),
-    macos_node_debug: doMacBuild('node Debug'),
-    macos_node_release: doMacBuild('node Release'),
-    macos_react_tests_debug: doMacBuild('react-tests Debug'),
-    macos_react_tests_release: doMacBuild('react-tests Release'),
-    macos_react_example_debug: doMacBuild('react-example Debug'),
-    macos_react_example_release: doMacBuild('react-example Release'),
     macos_electron_debug: doMacBuild('electron Debug'),
     macos_electron_release: doMacBuild('electron Release'),
-    //android_react_tests: doAndroidBuild('react-tests-android', {
-    //  junit 'tests/react-test-app/tests.xml'
-    //}),
-    windows_node: doWindowsBuild(),
-    package: packageNpmArchive(),
-  )
-}
-
-stage('integration tests') {
-  parallel(
-    // Integration tests:
-    // The tests above should be removed once we manage to move them to the new test harness in ./integration-tests
-    'React Native on Android': ReactNativeTests.onAndroid(),
-    'React Native on iOS': ReactNativeTests.onIOS(),
-    'Node.js v10 on Mac': NodeJsTests.onMacOS(nodeVersion: '10'),
-    'Node.js v8 on Linux': NodeJsTests.onLinux(nodeVersion: '8'),
-    'Node.js v10 on Linux': NodeJsTests.onLinux(nodeVersion: '10'),
-    'Electron on Linux': ElectronTests.onLinux(),
   )
 }
 
